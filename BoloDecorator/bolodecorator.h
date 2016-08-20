@@ -10,10 +10,12 @@ class BoloDecorator: public IBolo,
 public:
     BoloDecorator(QObject* parent = 0);
     virtual ~BoloDecorator(){}
+    virtual BoloDecorator *create() const = 0;
     void setDecorated(IBolo *component);
 protected:
     IBolo *m_decorated;
 };
+
 
 Q_DECLARE_INTERFACE(BoloDecorator, "org.qt-project.BoloDecorator.BoloDecorator")
 

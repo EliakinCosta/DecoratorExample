@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <../IBolo/ibolo.h>
 #include <../BoloDecorator/bolodecorator.h>
-#include <QList>
+#include <QMap>
 
 namespace Ui {
 class MainWindow;
@@ -22,7 +22,7 @@ private:
     void loadPlugins();
     void loadedPluginsToList();
     Ui::MainWindow *ui;
-    QList<BoloDecorator *> *m_loadedDecorators;
+    QMap<QString, BoloDecorator *> *m_loadedDecorators;
 
 private Q_SLOTS:
     void insertButton();

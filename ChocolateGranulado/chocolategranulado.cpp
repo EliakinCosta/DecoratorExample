@@ -11,3 +11,8 @@ void ChocolateGranulado::assar() const
     m_decorated->assar();
     qDebug() << "Chocolate granulado";
 }
+
+BoloDecorator *ChocolateGranulado::create() const
+{
+    return new ChocolateGranulado;
+}

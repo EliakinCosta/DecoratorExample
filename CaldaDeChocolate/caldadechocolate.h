@@ -13,6 +13,6 @@ public:
     CaldaDeChocolate(QObject *parent = 0);
     ~CaldaDeChocolate(){}
     virtual void assar() const;
+    virtual BoloDecorator *create() const;
 };
-
 #endif // CALDADECHOCOLATE_H

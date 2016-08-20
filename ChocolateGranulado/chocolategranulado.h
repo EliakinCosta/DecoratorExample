@@ -13,6 +13,7 @@ public:
     ChocolateGranulado(QObject *parent = 0);
     virtual ~ChocolateGranulado(){}
     virtual void assar() const;
+    virtual BoloDecorator *create() const;
 };
 
 #endif // CHOCOLATEGRANULADO_H

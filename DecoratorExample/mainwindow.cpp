@@ -7,11 +7,13 @@
 #include <QApplication>
 #include <QDebug>
 #include <QList>
+#include <QListWidgetItem>
+#include <QListWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_loadedDecorators(new QList<BoloDecorator*>)
+    m_loadedDecorators(new QMap<QString, BoloDecorator*>)
 {
     ui->setupUi(this);
 
@@ -29,13 +31,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::insertButton()
 {
-    qDebug() << "insert";
+    int row = ui->listWidget_2->count();
+    QListWidgetItem *newItem = new QListWidgetItem;
+    newItem->setText(ui->listWidget->currentItem()->text());
+
+    ui->listWidget_2->insertItem(row, newItem);
+
 }
 
 
 void MainWindow::removeButton()
 {
-    qDebug() << "remove";
+    foreach (QListWidgetItem *item, ui->listWidget_2->selectedItems()) {
+        ui->listWidget_2->takeItem(ui->listWidget_2->row(item));
+    }
 }
 
 void MainWindow::loadPlugins()
@@ -65,15 +74,17 @@ void MainWindow::loadPlugins()
             if (plugin)
             {
                qDebug() << plugin;
-               m_loadedDecorators->append(plugin);
+               m_loadedDecorators->insert(plugin->metaObject()->className(), plugin);
             }
         }
 }
 
 void MainWindow::loadedPluginsToList()
 {
-    foreach (BoloDecorator *decorator, *m_loadedDecorators)
+    foreach (QString decoratorName, m_loadedDecorators->keys())
     {
-        ui->listWidget->addItem(decorator->metaObject()->className());
+        QListWidgetItem *newItem = new QListWidgetItem;
+        newItem->setText(decoratorName);
+        ui->listWidget->insertItem(ui->listWidget->count(), newItem);
     }
 }

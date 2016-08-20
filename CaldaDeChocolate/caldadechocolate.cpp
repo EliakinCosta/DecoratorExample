@@ -11,3 +11,8 @@ void CaldaDeChocolate::assar() const
     m_decorated->assar();
     qDebug() << "Calda de chocolate";
 }
+
+BoloDecorator *CaldaDeChocolate::create() const
+{
+    return new CaldaDeChocolate;
+}
