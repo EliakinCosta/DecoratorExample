@@ -27,7 +27,9 @@ private:
 private Q_SLOTS:
     void insertButton();
     void removeButton();
-
+    void prepararBolo();
+    void subirDecorator();
+    void descerDecorator();
 };
 
 #endif // MAINWINDOW_H

@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <../BoloDecorator/bolodecorator.h>
+#include <../IBolo/ibolo.h>
+#include <../BoloDeMilho/bolodemilho.h>
 #include <QDir>
 #include <QPluginLoader>
 #include <QApplication>
@@ -19,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->m_btInserir, SIGNAL (released()), this, SLOT (insertButton()));
     connect(ui->m_btRemover, SIGNAL (released()), this, SLOT (removeButton()));
+    connect(ui->m_brPreparar, SIGNAL(released()), this, SLOT (prepararBolo()));
+    connect(ui->m_btSubir, SIGNAL(released()), this, SLOT (subirDecorator()));
+    connect(ui->m_btDescer, SIGNAL(released()), this, SLOT (descerDecorator()));
 
     loadPlugins();
     loadedPluginsToList();
@@ -44,6 +49,50 @@ void MainWindow::removeButton()
 {
     foreach (QListWidgetItem *item, ui->listWidget_2->selectedItems()) {
         ui->listWidget_2->takeItem(ui->listWidget_2->row(item));
+    }
+}
+
+void MainWindow::prepararBolo()
+{
+    IBolo *bolo = new BoloDeMilho;
+    BoloDecorator *decorator = 0;
+    for(int i = 0; i < ui->listWidget_2->count(); ++i)
+    {
+        QListWidgetItem* item = ui->listWidget_2->item(i);
+        BoloDecorator *temp_decorator = m_loadedDecorators->value(item->text())->create();
+        if(i==0)
+        {
+            decorator = temp_decorator;
+            decorator->setDecorated(bolo);
+        }
+        else
+        {
+            temp_decorator->setDecorated(decorator);
+            decorator = temp_decorator;
+        }
+    }
+    decorator->assar();
+}
+
+
+void MainWindow::subirDecorator()
+{
+    if(ui->listWidget_2->currentItem() && ui->listWidget_2->row(ui->listWidget_2->currentItem()) > 0)
+    {
+        int row = ui->listWidget_2->row(ui->listWidget_2->currentItem());
+        QListWidgetItem *item = ui->listWidget_2->takeItem(row);
+        ui->listWidget_2->insertItem(row-1, item);
+    }
+}
+
+void MainWindow::descerDecorator()
+{
+    int count = ui->listWidget_2->count();
+    if(ui->listWidget_2->currentItem() && ui->listWidget_2->row(ui->listWidget_2->currentItem()) < count-1)
+    {
+        int row = ui->listWidget_2->row(ui->listWidget_2->currentItem());
+        QListWidgetItem *item = ui->listWidget_2->takeItem(row);
+        ui->listWidget_2->insertItem(row+1, item);
     }
 }
 

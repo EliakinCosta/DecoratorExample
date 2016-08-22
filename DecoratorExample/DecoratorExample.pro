@@ -32,3 +32,10 @@ else:unix: LIBS += -L$$PWD/../build-BoloDecorator-Desktop-Debug/ -lBoloDecorator
 
 INCLUDEPATH += $$PWD/../build-BoloDecorator-Desktop-Debug
 DEPENDPATH += $$PWD/../build-BoloDecorator-Desktop-Debug
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-BoloDeMilho-Desktop-Debug/release/ -lBoloDeMilho
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-BoloDeMilho-Desktop-Debug/debug/ -lBoloDeMilho
+else:unix: LIBS += -L$$PWD/../build-BoloDeMilho-Desktop-Debug/ -lBoloDeMilho
+
+INCLUDEPATH += $$PWD/../build-BoloDeMilho-Desktop-Debug
+DEPENDPATH += $$PWD/../build-BoloDeMilho-Desktop-Debug
